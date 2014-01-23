@@ -10,9 +10,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.misterpops.towerknight.TowerKnight;
 
 public class MainMenu implements Screen{
@@ -24,6 +27,8 @@ public class MainMenu implements Screen{
 	Skin skin;
 	SpriteBatch batch;
 	TextButton button;
+	Label label;
+	private final int BUFFER = 100;
 	
 	public MainMenu(TowerKnight game) {
 		this.game = game;
@@ -49,6 +54,7 @@ public class MainMenu implements Screen{
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
 		
+		//Setup for menu buttons...
 		TextButtonStyle style = new TextButtonStyle();
 		style.up = skin.getDrawable("button_unselected");
 		style.over = skin.getDrawable("button_selected");
@@ -69,7 +75,15 @@ public class MainMenu implements Screen{
 			}
 		});
 		
+		//Game name, probably will replaced with animated picture in the future
+		LabelStyle labelStyle = new LabelStyle(whiteFont, Color.BLACK);
+		label = new Label("Tower Knight", labelStyle);
+		label.setX(0); label.setY(Gdx.graphics.getHeight() / 2 + BUFFER);
+		label.setWidth(width);
+		label.setAlignment(Align.center);
+		
 		stage.addActor(button);
+		stage.addActor(label);
 	}
 
 	@Override
