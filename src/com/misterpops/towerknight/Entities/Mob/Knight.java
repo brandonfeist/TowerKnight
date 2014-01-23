@@ -10,4 +10,9 @@ public class Knight extends MovableEntity{
 		this.speed = 5f;
 	}
 
+	@Override
+	public void update() {	
+		
+	}
+
 }

@@ -11,6 +11,8 @@ public abstract class MovableEntity extends Entity {
 		super(position, width, height);
 		this.rotation = rotation;
 	}
+	
+	public abstract void update();
 
 	/**
 	 * @return the velocity

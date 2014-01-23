@@ -26,9 +26,11 @@ public class MainMenu implements Screen{
 	TextureAtlas buttonAtlas;
 	Skin skin;
 	SpriteBatch batch;
-	TextButton button;
+	TextButton newGameButton;
 	Label label;
-	private final int BUFFER = 100;
+	private final int BUFFER = 100, 
+			BUTTON_WIDTH = 500, 
+			BUTTON_HEIGHT = 80;
 	
 	public MainMenu(TowerKnight game) {
 		this.game = game;
@@ -60,12 +62,12 @@ public class MainMenu implements Screen{
 		style.over = skin.getDrawable("button_selected");
 		style.font = whiteFont;
 		
-		button = new TextButton("New Game", style);
-		button.setWidth(500); button.setHeight(80);
-		button.setX(Gdx.graphics.getWidth() / 2 - button.getWidth() / 2);
-		button.setY(Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
+		newGameButton = new TextButton("New Game", style);
+		newGameButton.setWidth(BUTTON_WIDTH); newGameButton.setHeight(BUTTON_HEIGHT);
+		newGameButton.setX(Gdx.graphics.getWidth() / 2 - newGameButton.getWidth() / 2);
+		newGameButton.setY(Gdx.graphics.getHeight() / 2 - newGameButton.getHeight() / 2);
 		
-		button.addListener(new InputListener() {
+		newGameButton.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
 			}
@@ -82,7 +84,7 @@ public class MainMenu implements Screen{
 		label.setWidth(width);
 		label.setAlignment(Align.center);
 		
-		stage.addActor(button);
+		stage.addActor(newGameButton);
 		stage.addActor(label);
 	}
 

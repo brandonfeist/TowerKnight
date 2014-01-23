@@ -1,24 +1,26 @@
 package com.misterpops.towerknight.Screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
 import com.misterpops.towerknight.TowerKnight;
 import com.misterpops.towerknight.Level.World;
+import com.misterpops.towerknight.Rendering.WorldRender;
 
 public class Game implements Screen{
 	
 	TowerKnight game;
 	World world;
+	WorldRender render;
 	
 	public Game(TowerKnight game) {
 		this.game = game;
+		world = new World(game);
+		render = new WorldRender(world);
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		world.update();
+		render.render();
 	}
 
 	@Override
@@ -33,7 +35,7 @@ public class Game implements Screen{
 
 	@Override
 	public void hide() {
-		
+		dispose();
 	}
 
 	@Override
@@ -48,7 +50,7 @@ public class Game implements Screen{
 
 	@Override
 	public void dispose() {
-		
+		world.dispose();
 	}
 
 }
