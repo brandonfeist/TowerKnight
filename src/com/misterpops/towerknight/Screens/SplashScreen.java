@@ -23,6 +23,7 @@ public class SplashScreen implements Screen {
 	SpriteBatch batch;
 	TowerKnight game;
 	TweenManager manager;
+	
 	public SplashScreen(TowerKnight game) {
 		this.game = game;
 	}
@@ -39,7 +40,7 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		
+
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void hide() {
-		
+		dispose();
 	}
 
 	@Override
