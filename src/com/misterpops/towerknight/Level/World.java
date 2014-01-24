@@ -12,7 +12,7 @@ public class World {
 	
 	public World(TowerKnight game) {
 		this.game = game;
-		knight = new Knight(0, new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2), 1, 1);
+		knight = new Knight(0, new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2), 16, 32);
 	}
 	
 	public void update(float delta) {
