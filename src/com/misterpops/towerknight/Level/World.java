@@ -15,7 +15,7 @@ public class World {
 		knight = new Knight(0, new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2), 1, 1);
 	}
 	
-	public void update() {
+	public void update(float delta) {
 		knight.update();
 	}
 	

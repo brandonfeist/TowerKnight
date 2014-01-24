@@ -1,5 +1,6 @@
 package com.misterpops.towerknight.Entities;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -7,6 +8,7 @@ public abstract class Entity {
 	protected Vector2 position;
 	protected float width, height;
 	protected Rectangle AABB;
+	protected TextureRegion currentFrame;
 	
 	public Entity(Vector2 position, float width, float height) {
 		this.position = position;
@@ -14,6 +16,8 @@ public abstract class Entity {
 		this.height = height;
 		AABB = new Rectangle(position.x, position.y, height, width);
 	}
+	
+	public abstract void update();
 	
 	/**
 	 * @return the position
@@ -62,6 +66,10 @@ public abstract class Entity {
 	 */
 	public void setAABB(Rectangle bounds) {
 		AABB = bounds;
+	}
+	
+	public TextureRegion getCurrentFrame() {
+		return currentFrame;
 	}
 	
 	

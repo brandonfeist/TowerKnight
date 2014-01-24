@@ -6,13 +6,13 @@ public abstract class MovableEntity extends Entity {
 
 	protected Vector2 velocity;
 	protected float speed, rotation;
+	protected boolean moving = false,
+			right = true;
 	
 	public MovableEntity(float rotation, Vector2 position, float width, float height) {
 		super(position, width, height);
 		this.rotation = rotation;
 	}
-	
-	public abstract void update();
 
 	/**
 	 * @return the velocity

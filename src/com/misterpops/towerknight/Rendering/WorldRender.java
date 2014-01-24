@@ -21,7 +21,6 @@ public class WorldRender {
 		this.world = world;
 		batch = new SpriteBatch();
 		cam = new OrthographicCamera();
-		knightTexture = new Texture("data/mobs/knight_standing0.png");
 	}
 	
 	public void render() {
@@ -30,7 +29,7 @@ public class WorldRender {
 		
 		knight = world.getKnight();
 		batch.begin();
-		batch.draw(knightTexture, knight.getPosistion().x, knight.getPosistion().y);
+		batch.draw(knight.getCurrentFrame(), knight.getPosistion().x, knight.getPosistion().y);
 		batch.end();
 	}
 	
