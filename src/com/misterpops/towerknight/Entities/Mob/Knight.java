@@ -9,13 +9,16 @@ import com.misterpops.towerknight.Rendering.Textures;
 
 public class Knight extends MovableEntity{
 	
+	private final float MAX_HORIZONTAL_SPEED = 8f;
 	private Animation standingAnimation, standingLeftAnimation,
 			runningAnimation, runningLeftAnimation;
 	private float stateTime;	//Keeps track of animation timing.
 
 	public Knight(float rotation, Vector2 position, float width, float height) {
 		super(rotation, position, width, height);
-		this.speed = 5f;
+		
+		velocity = new Vector2();
+		acceleration = new Vector2();
 		
 		//Initialize animation stuff
 		standingAnimation = new Animation(0.060f, Textures.knightStanding);
@@ -32,17 +35,28 @@ public class Knight extends MovableEntity{
 	}
 	
 	private void move() {
+		float deltaTime = Gdx.graphics.getDeltaTime();
+		
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			moving = true; right = true;
+			 right = true;
 			currentFrame = runningAnimation.getKeyFrame(stateTime, true);
+			acceleration.x = MAX_HORIZONTAL_SPEED;
 		} else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			moving = true; right = false;
+			right = false;
 			currentFrame = runningLeftAnimation.getKeyFrame(stateTime, true);
+			acceleration.x = - MAX_HORIZONTAL_SPEED;
 		} else {
-			moving = false;
 			currentFrame = right? standingAnimation.getKeyFrame(stateTime, true) : 
 				standingLeftAnimation.getKeyFrame(stateTime, true);
+			acceleration.x = 0;
 		}
+		
+
+		velocity.add(acceleration);
+        
+		velocity.mul(deltaTime);
+		position.add(velocity);
+		//System.out.println("X: " + position.x + " Y: " + position.y);
 	}
 
 }

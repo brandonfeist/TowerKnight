@@ -1,7 +1,7 @@
 package com.misterpops.towerknight;
 
 import com.badlogic.gdx.Game;
-import com.misterpops.towerknight.Screens.SplashScreen;
+import com.misterpops.towerknight.Screens.MainMenu;
 
 public class TowerKnight extends Game {
 	
@@ -10,7 +10,8 @@ public class TowerKnight extends Game {
 	
 	@Override
 	public void create() {
-		setScreen(new SplashScreen(this));
+		//setScreen(new SplashScreen(this));
+		setScreen(new MainMenu(this));
 	}
 
 	@Override

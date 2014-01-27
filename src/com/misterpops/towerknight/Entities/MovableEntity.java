@@ -4,10 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class MovableEntity extends Entity {
 
-	protected Vector2 velocity;
-	protected float speed, rotation;
-	protected boolean moving = false,	//If entity is moving.
-			right = true;				//If entity is facing right.
+	protected Vector2 velocity, acceleration;
+	protected float rotation;
+	protected boolean right = true;	//If entity is facing right.
 	
 	public MovableEntity(float rotation, Vector2 position, float width, float height) {
 		super(position, width, height);
@@ -27,19 +26,13 @@ public abstract class MovableEntity extends Entity {
 	public void setVelocity(Vector2 velocity) {
 		this.velocity = velocity;
 	}
-
-	/**
-	 * @return the speed
-	 */
-	public float getSpeed() {
-		return speed;
+	
+	public Vector2 getAcceleration() {
+		return acceleration;
 	}
-
-	/**
-	 * @param speed the speed to set
-	 */
-	public void setSpeed(float speed) {
-		this.speed = speed;
+	
+	public void setAcceleration(Vector2 acceleration) {
+		this.acceleration = acceleration;
 	}
 	
 	/**
