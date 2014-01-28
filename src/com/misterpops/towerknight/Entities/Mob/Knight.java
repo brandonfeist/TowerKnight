@@ -5,11 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.misterpops.towerknight.Entities.MovableEntity;
+import com.misterpops.towerknight.Level.World;
 import com.misterpops.towerknight.Rendering.Textures;
 
 public class Knight extends MovableEntity{
 	
-	private final float MAX_HORIZONTAL_SPEED = 8f;
+	private final float MAX_HORIZONTAL_SPEED = 60 * 2;
 	private Animation standingAnimation, standingLeftAnimation,
 			runningAnimation, runningLeftAnimation;
 	private float stateTime;	//Keeps track of animation timing.
@@ -32,10 +33,14 @@ public class Knight extends MovableEntity{
 	public void update() {	
 		stateTime += Gdx.graphics.getDeltaTime();
 		move();
+		setAABBCoord(position.x, position.y);
 	}
 	
 	private void move() {
 		float deltaTime = Gdx.graphics.getDeltaTime();
+		
+		//Apply gravity
+		velocity.y = - World.GRAVITY;
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			 right = true;
@@ -51,12 +56,14 @@ public class Knight extends MovableEntity{
 			acceleration.x = 0;
 		}
 		
-
 		velocity.add(acceleration);
-        
 		velocity.mul(deltaTime);
-		position.add(velocity);
-		//System.out.println("X: " + position.x + " Y: " + position.y);
+		
+		//Collision Detection
+		collision();
+		
+		/*if(velocity.x != 0 || velocity.y != 0) {
+			//if still moving after letting go of key
+		}*/
 	}
-
 }

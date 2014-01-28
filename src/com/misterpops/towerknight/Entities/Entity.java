@@ -17,6 +17,11 @@ public abstract class Entity {
 		AABB = new Rectangle(position.x, position.y, height, width);
 	}
 	
+	public Entity(float width, float height) {
+		this.width = width;
+		this.height = height;
+	}
+	
 	public abstract void update();
 	
 	/**
@@ -68,9 +73,11 @@ public abstract class Entity {
 		AABB = bounds;
 	}
 	
-	public TextureRegion getCurrentFrame() {
-		return currentFrame;
+	protected void setAABBCoord(float x, float y) {
+		AABB.setX(position.x); AABB.setY(position.y);
 	}
 	
-	
+	public TextureRegion getCurrentFrame() {
+		return currentFrame;
+	}	
 }

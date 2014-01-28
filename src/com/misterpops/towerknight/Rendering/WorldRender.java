@@ -1,5 +1,7 @@
 package com.misterpops.towerknight.Rendering;
 
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -8,7 +10,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.misterpops.towerknight.TowerKnight;
 import com.misterpops.towerknight.Entities.Mob.Knight;
+import com.misterpops.towerknight.Entities.Tile.Coord;
+import com.misterpops.towerknight.Entities.Tile.Tile;
 import com.misterpops.towerknight.Level.World;
 
 public class WorldRender {
@@ -49,14 +54,26 @@ public class WorldRender {
 		//Later, set Array loop to render separate objects.
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
+		
+		for(Entry<Coord, Tile> entry : World.map.entrySet()) {
+			Coord coord = entry.getKey();
+			Tile tile = entry.getValue();
+			
+			batch.draw(tile.getTileTex(),
+					coord.getX() * TowerKnight.TILE_SIZE, coord.getY() * TowerKnight.TILE_SIZE);
+		}
+		
 		batch.draw(knight.getCurrentFrame(), knight.getPosistion().x, knight.getPosistion().y);
+		
 		batch.end();
 		
 		//Later, set Array loop to render separate AABB boxes with different colors.
 		sr.setProjectionMatrix(cam.combined);
 		sr.begin(ShapeType.Rectangle);
-		sr.rect(knight.getPosistion().x, knight.getPosistion().y, 
+		
+		sr.rect(knight.getAABB().getX(), knight.getAABB().getY(), 
 				knight.getWidth(), knight.getHeight());
+		
 		sr.end();
 	}
 	

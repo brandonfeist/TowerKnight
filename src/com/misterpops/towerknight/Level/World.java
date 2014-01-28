@@ -1,18 +1,24 @@
 package com.misterpops.towerknight.Level;
 
-import com.badlogic.gdx.Gdx;
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.badlogic.gdx.math.Vector2;
 import com.misterpops.towerknight.TowerKnight;
 import com.misterpops.towerknight.Entities.Mob.Knight;
+import com.misterpops.towerknight.Entities.Tile.Coord;
+import com.misterpops.towerknight.Entities.Tile.Tile;
 
 public class World {
 	
 	TowerKnight game;
 	Knight knight;
+	public static final float GRAVITY = 60 * 1.8f;
+	
+	public static ConcurrentHashMap<Coord, Tile> map = LevelGenerator.debugGenerateLevel(); // Ex. = get dungeonMap.getMap();\
 	
 	public World(TowerKnight game) {
 		this.game = game;
-		knight = new Knight(0, new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2), 16, 32);
+		knight = new Knight(0, new Vector2(42, 42), 16, 32);
 	}
 	
 	public void update(float delta) {
