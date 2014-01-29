@@ -12,6 +12,7 @@ public class Knight extends MovableEntity{
 	
 	private final float MAX_HORIZONTAL_SPEED = 60 * 2.3f;
 	private final float MAX_VERTICAL_SPEED = 60 * 2.3f;
+	private final int ACCEL_DEGRADE = 16;
 	private Animation standingAnimation, standingLeftAnimation,
 			runningAnimation, runningLeftAnimation;
 	private float stateTime;	//Keeps track of animation timing.
@@ -37,37 +38,23 @@ public class Knight extends MovableEntity{
 		setAABBCoord(position.x, position.y);
 	}
 	
+	/**
+	 * Everything to do with the knight's movement throughout the world.
+	 */
 	private void move() {
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		
 		//Apply gravity
 		velocity.y -= World.GRAVITY;
-						
+		
 		//Clamp velocity
 		if(velocity.y > MAX_VERTICAL_SPEED)
 			velocity.y = MAX_VERTICAL_SPEED;
 		else if(velocity.y < - MAX_VERTICAL_SPEED)
 			velocity.y = - MAX_VERTICAL_SPEED;
 		
-		//Input action
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			 right = true;
-			currentFrame = runningAnimation.getKeyFrame(stateTime, true);
-			acceleration.x = MAX_HORIZONTAL_SPEED;
-		} else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			right = false;
-			currentFrame = runningLeftAnimation.getKeyFrame(stateTime, true);
-			acceleration.x = - MAX_HORIZONTAL_SPEED;
-		} else {
-			currentFrame = right? standingAnimation.getKeyFrame(stateTime, true) : 
-				standingLeftAnimation.getKeyFrame(stateTime, true);
-			acceleration.x = 0;
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump) {
-			canJump = false;
-			jumping = true;
-			jumpSpeed = MAX_VERTICAL_SPEED * 2.5f;
-		}
+		//Input and acceleration.
+		accleration();
 		
 		//Jumping action if jumping == true.
 		jump();
@@ -77,9 +64,48 @@ public class Knight extends MovableEntity{
 		
 		//Collision Detection
 		collision();
+	}
+	
+	private void accleration() {
+		//Frankenstein Input action and acceleration system.
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			right = true;
+			currentFrame = runningAnimation.getKeyFrame(stateTime, true);
+			if(acceleration.x < MAX_HORIZONTAL_SPEED)
+				acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE / 2);
+		} else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			right = false;
+			currentFrame = runningLeftAnimation.getKeyFrame(stateTime, true);
+			if(acceleration.x > - MAX_HORIZONTAL_SPEED)
+				acceleration.x += - MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE / 2);
+		} else {
+			//Standing/sliding animations.
+			if(acceleration.x != 0) {
+				//sliding animations
+				//just standing animation right now. Need to draw sliding animation
+				currentFrame = right? standingAnimation.getKeyFrame(stateTime, true) : 
+					standingLeftAnimation.getKeyFrame(stateTime, true);
+			} else {
+				currentFrame = right? standingAnimation.getKeyFrame(stateTime, true) : 
+					standingLeftAnimation.getKeyFrame(stateTime, true);
+			}
+			
+			//If in the air acceleration.x degrades slower. If on the ground faster.
+			if(canJump) {
+					acceleration.mul(0.60f, 0);
+			} else {
+				if(acceleration.x > 0)
+					acceleration.x -= MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 6);
+				else if(acceleration.x < 0)
+					acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 6);
+			}
+		}
 		
-		/*if(velocity.x != 0 || velocity.y != 0) {
-			//if still moving after letting go of key
-		}*/
+		//Jumping
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump) {
+			canJump = false;
+			jumping = true;
+			jumpSpeed = MAX_VERTICAL_SPEED * 2f;
+		}
 	}
 }

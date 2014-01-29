@@ -86,9 +86,8 @@ public abstract class MovableEntity extends Entity {
 	
 	public void jump() {
 		if(jumping) {
-			jumpSpeed -= 4.3f;
-			
 			velocity.add(0, jumpSpeed);
+			jumpSpeed -= 4.3f;
 			
 			if(!Gdx.input.isKeyPressed(Input.Keys.SPACE) ||
 					jumpSpeed <= 0 || jumpSpeed < World.GRAVITY) {
