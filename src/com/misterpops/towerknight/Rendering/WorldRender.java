@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.misterpops.towerknight.TowerKnight;
 import com.misterpops.towerknight.Entities.Mob.Knight;
 import com.misterpops.towerknight.Entities.Tile.Coord;
@@ -68,13 +67,14 @@ public class WorldRender {
 		batch.end();
 		
 		//Later, set Array loop to render separate AABB boxes with different colors.
+		/*
 		sr.setProjectionMatrix(cam.combined);
 		sr.begin(ShapeType.Rectangle);
 		
 		sr.rect(knight.getAABB().getX(), knight.getAABB().getY(), 
 				knight.getWidth(), knight.getHeight());
 		
-		sr.end();
+		sr.end();*/
 	}
 	
 	public void dispose() {
