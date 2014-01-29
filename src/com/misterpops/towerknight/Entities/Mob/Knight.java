@@ -39,6 +39,7 @@ public class Knight extends MovableEntity{
 	private void move() {
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		
+		
 		//Apply gravity
 		velocity.y = - World.GRAVITY;
 		
@@ -61,7 +62,7 @@ public class Knight extends MovableEntity{
 		
 		//Collision Detection
 		collision();
-		
+				
 		/*if(velocity.x != 0 || velocity.y != 0) {
 			//if still moving after letting go of key
 		}*/

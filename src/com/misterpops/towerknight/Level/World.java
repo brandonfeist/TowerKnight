@@ -18,7 +18,7 @@ public class World {
 	
 	public World(TowerKnight game) {
 		this.game = game;
-		knight = new Knight(0, new Vector2(42, 42), 16, 32);
+		knight = new Knight(0, new Vector2(124, 90), 16, 32);
 	}
 	
 	public void update(float delta) {
