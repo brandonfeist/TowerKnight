@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Entity {
-	protected Vector2 position;
+	protected Vector2 position, oldPosition;
 	protected float width, height;
 	protected Rectangle AABB;
 	protected TextureRegion currentFrame;
@@ -35,6 +35,10 @@ public abstract class Entity {
 	 */
 	public void setPosistion(Vector2 position) {
 		this.position = position;
+	}
+	
+	public Vector2 getOldPosition() {
+		return oldPosition;
 	}
 	/**
 	 * @return the width

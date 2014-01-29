@@ -1,5 +1,11 @@
 package com.misterpops.towerknight.Entities.Tile;
 
+/**
+ * Used as coordinate for a tile that is put in a
+ * concurrent hashmap.
+ * @author Brandon
+ *
+ */
 public class Coord {
 	
 	private int x;

@@ -10,8 +10,8 @@ import com.misterpops.towerknight.Rendering.Textures;
 
 public class Knight extends MovableEntity{
 	
-	private final float MAX_HORIZONTAL_SPEED = 60 * 2;
-	private final float MAX_VERTICAL_SPEED = 60 * 2;
+	private final float MAX_HORIZONTAL_SPEED = 60 * 2.3f;
+	private final float MAX_VERTICAL_SPEED = 60 * 2.3f;
 	private Animation standingAnimation, standingLeftAnimation,
 			runningAnimation, runningLeftAnimation;
 	private float stateTime;	//Keeps track of animation timing.
@@ -41,8 +41,8 @@ public class Knight extends MovableEntity{
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		
 		//Apply gravity
-		velocity.y = - World.GRAVITY;
-		
+		velocity.y -= World.GRAVITY;
+						
 		//Clamp velocity
 		if(velocity.y > MAX_VERTICAL_SPEED)
 			velocity.y = MAX_VERTICAL_SPEED;
@@ -58,21 +58,26 @@ public class Knight extends MovableEntity{
 			right = false;
 			currentFrame = runningLeftAnimation.getKeyFrame(stateTime, true);
 			acceleration.x = - MAX_HORIZONTAL_SPEED;
-		} else if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump) {
-			velocity.y = MAX_VERTICAL_SPEED;
-			canJump = false;
 		} else {
 			currentFrame = right? standingAnimation.getKeyFrame(stateTime, true) : 
 				standingLeftAnimation.getKeyFrame(stateTime, true);
 			acceleration.x = 0;
 		}
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump) {
+			canJump = false;
+			jumping = true;
+			jumpSpeed = MAX_VERTICAL_SPEED * 2.5f;
+		}
+		
+		//Jumping action if jumping == true.
+		jump();
 		
 		velocity.add(acceleration);
 		velocity.mul(deltaTime);
 		
 		//Collision Detection
 		collision();
-				
+		
 		/*if(velocity.x != 0 || velocity.y != 0) {
 			//if still moving after letting go of key
 		}*/
