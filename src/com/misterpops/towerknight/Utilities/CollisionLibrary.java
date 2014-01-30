@@ -7,12 +7,15 @@ import com.misterpops.towerknight.Level.World;
 
 public class CollisionLibrary {
 	
+	//Collision still not perfect...
+	
 	private static final int COLLISION_PERCISION = 16;
-	private static final float COLLISION_ADJUSTMENT = 3.7f;
+	private static final float COLLISION_ADJUSTMENT = 3;
 	
 	private static boolean isTileBlocked(float x, float y) {
-		Coord coord = new Coord(Math.round((x - TowerKnight.TILE_SIZE / 2) / TowerKnight.TILE_SIZE),
-				Math.round((y - TowerKnight.TILE_SIZE / 2) / TowerKnight.TILE_SIZE));
+		int intX = (int) (x) / TowerKnight.TILE_SIZE;
+		int intY = (int) (y) / TowerKnight.TILE_SIZE;
+		Coord coord = new Coord(intX, intY);
 		
 		if(World.map.containsKey(coord)) {
 			return World.map.get(coord).getIsSolid();
@@ -46,7 +49,7 @@ public class CollisionLibrary {
 	
 	public static boolean collidesBot(Entity entity) {
 		for(float step = 0; step < entity.getWidth(); step += TowerKnight.TILE_SIZE / COLLISION_PERCISION) {
-			if(isTileBlocked(entity.getPosistion().x + step, entity.getPosistion().y + 1)) {
+			if(isTileBlocked(entity.getPosistion().x + step, entity.getPosistion().y)) {
 				return true;
 			}
 		}

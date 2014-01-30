@@ -81,7 +81,7 @@ public abstract class MovableEntity extends Entity {
 		}
 
 		if(collisionY) {
-			position.y = oldPosition.y;
+			position.y = (int) oldPosition.y;
 			velocity.y = 0;
 		}
 	}
