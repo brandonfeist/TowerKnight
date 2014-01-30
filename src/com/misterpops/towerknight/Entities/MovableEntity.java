@@ -77,6 +77,7 @@ public abstract class MovableEntity extends Entity {
 		canJump = collisionY = CollisionLibrary.collidesBot(this);
 		if(velocity.y > 0) {
 			collisionY = CollisionLibrary.collidesTop(this);
+			jumping = !CollisionLibrary.collidesTop(this);
 		}
 
 		if(collisionY) {

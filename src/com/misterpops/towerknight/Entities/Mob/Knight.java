@@ -13,10 +13,11 @@ public class Knight extends MovableEntity{
 	private final float MAX_HORIZONTAL_SPEED = 60 * 2.8f;
 	private final float MAX_VERTICAL_SPEED = 60 * 2.8f;
 	private final int ACCEL_DEGRADE = 16;
+	//Animation states and timer.
 	private Animation standingAnimation, standingLeftAnimation,
 			runningAnimation, runningLeftAnimation, fallingRight,
 			fallingLeft;
-	private float stateTime, fallingTime;	//Keeps track of animation timing.
+	private float stateTime;
 
 	public Knight(float rotation, Vector2 position, float width, float height) {
 		super(rotation, position, width, height);
@@ -37,7 +38,6 @@ public class Knight extends MovableEntity{
 	@Override
 	public void update() {	
 		stateTime += Gdx.graphics.getDeltaTime();
-		fallingTime += Gdx.graphics.getDeltaTime(); 
 		move();
 		setAABBCoord(position.x, position.y);
 	}
@@ -77,12 +77,7 @@ public class Knight extends MovableEntity{
 		//Collision Detection
 		collision();
 		
-		//Falling animation.
-		if(velocity.y < -2f) {
-			//Falling animation goes here vv
-			currentFrame = right? fallingRight.getKeyFrame(fallingTime, false) : 
-				fallingLeft.getKeyFrame(fallingTime, false);
-		}
+		jumpingFallingAnim();
 	}
 	
 	private void accleration() {
@@ -113,13 +108,27 @@ public class Knight extends MovableEntity{
 			//If canJump, the knight is on the ground.
 			if(canJump) {
 				acceleration.mul(0.60f, 0);
-				fallingTime = Gdx.graphics.getDeltaTime();
 			} else {
 				if(acceleration.x > 0)
 					acceleration.x -= MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 4);
 				else if(acceleration.x < 0)
 					acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 4);
 			}
+		}
+	}
+	
+	private void jumpingFallingAnim() {
+		//Jumping Animation
+		if(jumping) {
+			currentFrame = right? fallingRight.getKeyFrame(0, false) : 
+				fallingLeft.getKeyFrame(0, false);
+		}
+		
+		//Falling animation.
+		if(velocity.y < -1.7f) {
+			//Falling animation goes here vv
+			currentFrame = right? fallingRight.getKeyFrame(stateTime, false) : 
+				fallingLeft.getKeyFrame(stateTime, false);
 		}
 	}
 }
