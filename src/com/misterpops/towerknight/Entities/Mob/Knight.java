@@ -14,8 +14,9 @@ public class Knight extends MovableEntity{
 	private final float MAX_VERTICAL_SPEED = 60 * 2.8f;
 	private final int ACCEL_DEGRADE = 16;
 	private Animation standingAnimation, standingLeftAnimation,
-			runningAnimation, runningLeftAnimation;
-	private float stateTime;	//Keeps track of animation timing.
+			runningAnimation, runningLeftAnimation, fallingRight,
+			fallingLeft;
+	private float stateTime, fallingTime;	//Keeps track of animation timing.
 
 	public Knight(float rotation, Vector2 position, float width, float height) {
 		super(rotation, position, width, height);
@@ -28,12 +29,15 @@ public class Knight extends MovableEntity{
 		standingLeftAnimation = new Animation(0.060f, Textures.knightStandingLeft);
 		runningAnimation = new Animation(0.060f, Textures.knightRunning);
 		runningLeftAnimation = new Animation(0.060f, Textures.knightRunningLeft);
+		fallingRight = new Animation(0.090f, Textures.knightFallingRight);
+		fallingLeft = new Animation(0.090f, Textures.knightFallingLeft);
 		stateTime = 0f;
 	}
 
 	@Override
 	public void update() {	
 		stateTime += Gdx.graphics.getDeltaTime();
+		fallingTime += Gdx.graphics.getDeltaTime(); 
 		move();
 		setAABBCoord(position.x, position.y);
 	}
@@ -74,10 +78,10 @@ public class Knight extends MovableEntity{
 		collision();
 		
 		//Falling animation.
-		if(velocity.y < 0) {
+		if(velocity.y < -2f) {
 			//Falling animation goes here vv
-			currentFrame = right? standingAnimation.getKeyFrame(stateTime, true) : 
-				standingLeftAnimation.getKeyFrame(stateTime, true);
+			currentFrame = right? fallingRight.getKeyFrame(fallingTime, false) : 
+				fallingLeft.getKeyFrame(fallingTime, false);
 		}
 	}
 	
@@ -106,14 +110,15 @@ public class Knight extends MovableEntity{
 			}
 
 			//If in the air acceleration.x degrades slower. If on the ground faster.
+			//If canJump, the knight is on the ground.
 			if(canJump) {
 				acceleration.mul(0.60f, 0);
+				fallingTime = Gdx.graphics.getDeltaTime();
 			} else {
 				if(acceleration.x > 0)
 					acceleration.x -= MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 4);
 				else if(acceleration.x < 0)
 					acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 4);
-				//currentFrame = fallingAnimation;
 			}
 		}
 	}

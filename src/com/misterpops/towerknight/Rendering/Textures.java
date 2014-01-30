@@ -9,7 +9,8 @@ public class Textures {
 	private TextureAtlas tileAtlas;
 	
 	public static TextureRegion[] knightStanding,
-			knightStandingLeft, knightRunning, knightRunningLeft;
+			knightStandingLeft, knightRunning, knightRunningLeft,
+			knightFallingRight, knightFallingLeft;
 	
 	public static TextureRegion debug_tile;
 	
@@ -25,6 +26,8 @@ public class Textures {
 		knightStandingLeft = arrayLoad(knightAtlas, "knight_standing", 8, true);
 		knightRunning = arrayLoad(knightAtlas, "knight_running", 8, false);
 		knightRunningLeft = arrayLoad(knightAtlas, "knight_running", 8, true);
+		knightFallingRight = arrayLoad(knightAtlas, "falling", 2, false);
+		knightFallingLeft = arrayLoad(knightAtlas, "falling", 2, true);
 		
 		//Tiles
 		debug_tile = new TextureRegion(tileAtlas.findRegion("debug_tile"));
