@@ -12,7 +12,7 @@ public class World {
 	
 	TowerKnight game;
 	Knight knight;
-	public static final float GRAVITY = 60 * 1.8f;
+	public static final float GRAVITY = 60 * 4;
 	
 	public static ConcurrentHashMap<Coord, Tile> map = LevelGenerator.debugGenerateLevel(); // Ex. = get dungeonMap.getMap();\
 	

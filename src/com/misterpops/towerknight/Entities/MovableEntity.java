@@ -59,7 +59,8 @@ public abstract class MovableEntity extends Entity {
 		boolean collisionX = false, collisionY = false;
 		
 		position.add(velocity);
-			
+		
+		//X Collisions
 		if(velocity.x < 0) {
 			collisionX = CollisionLibrary.collidesLeft(this);
 		} else if(velocity.x > 0) {
@@ -72,9 +73,9 @@ public abstract class MovableEntity extends Entity {
 		}
 
 
-		if(velocity.y < 0) {
-			canJump = collisionY = CollisionLibrary.collidesBot(this);
-		} else if(velocity.y > 0) {
+		//Y Collisions
+		canJump = collisionY = CollisionLibrary.collidesBot(this);
+		if(velocity.y > 0) {
 			collisionY = CollisionLibrary.collidesTop(this);
 		}
 

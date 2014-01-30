@@ -10,8 +10,8 @@ import com.misterpops.towerknight.Rendering.Textures;
 
 public class Knight extends MovableEntity{
 	
-	private final float MAX_HORIZONTAL_SPEED = 60 * 2.3f;
-	private final float MAX_VERTICAL_SPEED = 60 * 2.3f;
+	private final float MAX_HORIZONTAL_SPEED = 60 * 2.8f;
+	private final float MAX_VERTICAL_SPEED = 60 * 2.8f;
 	private final int ACCEL_DEGRADE = 16;
 	private Animation standingAnimation, standingLeftAnimation,
 			runningAnimation, runningLeftAnimation;
@@ -45,13 +45,21 @@ public class Knight extends MovableEntity{
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		
 		//Apply gravity
-		velocity.y -= World.GRAVITY;
+		if(!canJump)
+			velocity.y -= World.GRAVITY;
 		
 		//Clamp velocity
 		if(velocity.y > MAX_VERTICAL_SPEED)
 			velocity.y = MAX_VERTICAL_SPEED;
 		else if(velocity.y < - MAX_VERTICAL_SPEED)
 			velocity.y = - MAX_VERTICAL_SPEED;
+		
+		//Jumping
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump) {
+			canJump = false;
+			jumping = true;
+			jumpSpeed = World.GRAVITY * 1.5f;
+		}
 		
 		//Input and acceleration.
 		accleration();
@@ -64,6 +72,13 @@ public class Knight extends MovableEntity{
 		
 		//Collision Detection
 		collision();
+		
+		//Falling animation.
+		if(velocity.y < 0) {
+			//Falling animation goes here vv
+			currentFrame = right? standingAnimation.getKeyFrame(stateTime, true) : 
+				standingLeftAnimation.getKeyFrame(stateTime, true);
+		}
 	}
 	
 	private void accleration() {
@@ -89,23 +104,17 @@ public class Knight extends MovableEntity{
 				currentFrame = right? standingAnimation.getKeyFrame(stateTime, true) : 
 					standingLeftAnimation.getKeyFrame(stateTime, true);
 			}
-			
+
 			//If in the air acceleration.x degrades slower. If on the ground faster.
 			if(canJump) {
-					acceleration.mul(0.60f, 0);
+				acceleration.mul(0.60f, 0);
 			} else {
 				if(acceleration.x > 0)
-					acceleration.x -= MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 6);
+					acceleration.x -= MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 4);
 				else if(acceleration.x < 0)
-					acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 6);
+					acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 4);
+				//currentFrame = fallingAnimation;
 			}
-		}
-		
-		//Jumping
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump) {
-			canJump = false;
-			jumping = true;
-			jumpSpeed = MAX_VERTICAL_SPEED * 2f;
 		}
 	}
 }

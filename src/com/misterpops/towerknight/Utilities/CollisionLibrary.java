@@ -8,7 +8,7 @@ import com.misterpops.towerknight.Level.World;
 public class CollisionLibrary {
 	
 	private static final int COLLISION_PERCISION = 16;
-	private static final float COLLISION_ADJUSTMENT = 3;
+	private static final float COLLISION_ADJUSTMENT = 3.7f;
 	
 	private static boolean isTileBlocked(float x, float y) {
 		Coord coord = new Coord(Math.round((x - TowerKnight.TILE_SIZE / 2) / TowerKnight.TILE_SIZE),
