@@ -58,31 +58,51 @@ public abstract class MovableEntity extends Entity {
 		oldPosition = new Vector2(position);
 		boolean collisionX = false, collisionY = false;
 		
-		position.add(velocity);
+		//position.add(velocity);
 		
 		//X Collisions
-		if(velocity.x < 0) {
-			collisionX = CollisionLibrary.collidesLeft(this);
-		} else if(velocity.x > 0) {
-			collisionX = CollisionLibrary.collidesRight(this);
-		}
+		if(velocity.x != 0) {
+			int countX = 0;
+			while (countX < 16) {
+				oldPosition.x = position.x;
+				position.x += velocity.x / 16;
+				
+				if(velocity.x < 0) {
+					collisionX = CollisionLibrary.collidesLeft(this);
+				} else if(velocity.x > 0) {
+					collisionX = CollisionLibrary.collidesRight(this);
+				}
 
-		if(collisionX) {
-			position.x = oldPosition.x;
-			velocity.x = 0;
+				if(collisionX) {
+					position.x = oldPosition.x;
+					velocity.x = 0;
+					break;
+				}
+				countX++;
+			}
 		}
 
 
 		//Y Collisions
-		canJump = collisionY = CollisionLibrary.collidesBot(this);
-		if(velocity.y > 0) {
-			collisionY = CollisionLibrary.collidesTop(this);
-			jumping = !CollisionLibrary.collidesTop(this);
-		}
+		if(velocity.y != 0) {
+			int countY = 0;
+			while(countY < 16) {
+				oldPosition.y = position.y;
+				position.y += velocity.y / 16;
 
-		if(collisionY) {
-			position.y = (int) oldPosition.y;
-			velocity.y = 0;
+				canJump = collisionY = CollisionLibrary.collidesBot(this);
+				if(velocity.y > 0) {
+					collisionY = CollisionLibrary.collidesTop(this);
+					jumping = !CollisionLibrary.collidesTop(this);
+				}
+
+				if(collisionY) {
+					position.y = oldPosition.y;
+					velocity.y = 0;
+					break;
+				}
+				countY++;
+			}
 		}
 	}
 	

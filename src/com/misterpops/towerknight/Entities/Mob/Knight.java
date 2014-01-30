@@ -49,8 +49,7 @@ public class Knight extends MovableEntity{
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		
 		//Apply gravity
-		if(!canJump)
-			velocity.y -= World.GRAVITY;
+		velocity.y -= World.GRAVITY;
 		
 		//Clamp velocity
 		if(velocity.y > MAX_VERTICAL_SPEED)

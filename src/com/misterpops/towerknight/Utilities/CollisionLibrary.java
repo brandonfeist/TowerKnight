@@ -10,7 +10,6 @@ public class CollisionLibrary {
 	//Collision still not perfect...
 	
 	private static final int COLLISION_PERCISION = 16;
-	private static final float COLLISION_ADJUSTMENT = 3;
 	
 	private static boolean isTileBlocked(float x, float y) {
 		int intX = (int) (x) / TowerKnight.TILE_SIZE;
@@ -24,11 +23,11 @@ public class CollisionLibrary {
 	}
 
 	public static boolean collidesLeft(Entity entity) {
-		for(float step = 0; step < entity.getHeight() - COLLISION_ADJUSTMENT;
+		for(float step = 0; step < entity.getHeight();
 				step += TowerKnight.TILE_SIZE / COLLISION_PERCISION) {
 			
 			if(isTileBlocked(entity.getPosistion().x,
-					entity.getPosistion().y + COLLISION_ADJUSTMENT + step)) {
+					entity.getPosistion().y + step)) {
 				return true;
 			}
 		}
@@ -36,11 +35,11 @@ public class CollisionLibrary {
 	}
 	
 	public static boolean collidesRight(Entity entity) {
-		for(float step = 0; step < entity.getHeight() - COLLISION_ADJUSTMENT;
+		for(float step = 0; step < entity.getHeight();
 				step += TowerKnight.TILE_SIZE / COLLISION_PERCISION) {
 			
 			if(isTileBlocked(entity.getPosistion().x + entity.getWidth(),
-					entity.getPosistion().y + COLLISION_ADJUSTMENT + step)) {
+					entity.getPosistion().y + step)) {
 				return true;
 			}
 		}
