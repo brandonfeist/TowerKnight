@@ -16,8 +16,8 @@ public class Knight extends MovableEntity{
 	//Animation states and timer.
 	private Animation standingAnimation, standingLeftAnimation,
 			runningAnimation, runningLeftAnimation, fallingRight,
-			fallingLeft;
-	private float stateTime;
+			fallingLeft, pushingRight, pushingLeft;
+	private float stateTime, deltaStateTime;
 
 	public Knight(float rotation, Vector2 position, float width, float height) {
 		super(rotation, position, width, height);
@@ -32,6 +32,8 @@ public class Knight extends MovableEntity{
 		runningLeftAnimation = new Animation(0.060f, Textures.knightRunningLeft);
 		fallingRight = new Animation(0.090f, Textures.knightFallingRight);
 		fallingLeft = new Animation(0.090f, Textures.knightFallingLeft);
+		pushingRight = new Animation(0.090f, Textures.knightPushingRight);
+		pushingLeft = new Animation(0.090f, Textures.knightPushingLeft);
 		stateTime = 0f;
 	}
 
@@ -83,12 +85,24 @@ public class Knight extends MovableEntity{
 		//Frankenstein Input action and acceleration system.
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			right = true;
-			currentFrame = runningAnimation.getKeyFrame(stateTime, true);
+			if(collisionRight) {
+				currentFrame = pushingRight.getKeyFrame(deltaStateTime, false);
+				deltaStateTime += Gdx.graphics.getDeltaTime();
+			} else {
+				currentFrame = runningAnimation.getKeyFrame(stateTime, true);
+				deltaStateTime = 0;
+			}
 			if(acceleration.x < MAX_HORIZONTAL_SPEED)
 				acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE / 2);
 		} else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			right = false;
-			currentFrame = runningLeftAnimation.getKeyFrame(stateTime, true);
+			if(collisionLeft) {
+				currentFrame = pushingLeft.getKeyFrame(deltaStateTime, false);
+				deltaStateTime += Gdx.graphics.getDeltaTime();
+			} else {
+				currentFrame = runningLeftAnimation.getKeyFrame(stateTime, true);
+				deltaStateTime = 0;
+			}
 			if(acceleration.x > - MAX_HORIZONTAL_SPEED)
 				acceleration.x += - MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE / 2);
 		} else {
