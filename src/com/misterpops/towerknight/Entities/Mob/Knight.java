@@ -17,7 +17,8 @@ public class Knight extends MovableEntity{
 	private Animation standingAnimation, standingLeftAnimation,
 			runningAnimation, runningLeftAnimation, fallingRight,
 			fallingLeft, pushingRight, pushingLeft;
-	private float stateTime, deltaStateTime;
+	//State times for animations.
+	private float stateTime, pushingStateTime, fallingStateTime;
 
 	public Knight(float rotation, Vector2 position, float width, float height) {
 		super(rotation, position, width, height);
@@ -30,8 +31,8 @@ public class Knight extends MovableEntity{
 		standingLeftAnimation = new Animation(0.060f, Textures.knightStandingLeft);
 		runningAnimation = new Animation(0.060f, Textures.knightRunning);
 		runningLeftAnimation = new Animation(0.060f, Textures.knightRunningLeft);
-		fallingRight = new Animation(0.090f, Textures.knightFallingRight);
-		fallingLeft = new Animation(0.090f, Textures.knightFallingLeft);
+		fallingRight = new Animation(0.070f, Textures.knightFallingRight);
+		fallingLeft = new Animation(0.070f, Textures.knightFallingLeft);
 		pushingRight = new Animation(0.090f, Textures.knightPushingRight);
 		pushingLeft = new Animation(0.090f, Textures.knightPushingLeft);
 		stateTime = 0f;
@@ -86,22 +87,22 @@ public class Knight extends MovableEntity{
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			right = true;
 			if(collisionRight) {
-				currentFrame = pushingRight.getKeyFrame(deltaStateTime, false);
-				deltaStateTime += Gdx.graphics.getDeltaTime();
+				currentFrame = pushingRight.getKeyFrame(pushingStateTime, false);
+				pushingStateTime += Gdx.graphics.getDeltaTime();
 			} else {
 				currentFrame = runningAnimation.getKeyFrame(stateTime, true);
-				deltaStateTime = 0;
+				pushingStateTime = 0;
 			}
 			if(acceleration.x < MAX_HORIZONTAL_SPEED)
 				acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE / 2);
 		} else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			right = false;
 			if(collisionLeft) {
-				currentFrame = pushingLeft.getKeyFrame(deltaStateTime, false);
-				deltaStateTime += Gdx.graphics.getDeltaTime();
+				currentFrame = pushingLeft.getKeyFrame(pushingStateTime, false);
+				pushingStateTime += Gdx.graphics.getDeltaTime();
 			} else {
 				currentFrame = runningLeftAnimation.getKeyFrame(stateTime, true);
-				deltaStateTime = 0;
+				pushingStateTime = 0;
 			}
 			if(acceleration.x > - MAX_HORIZONTAL_SPEED)
 				acceleration.x += - MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE / 2);
@@ -135,13 +136,14 @@ public class Knight extends MovableEntity{
 		if(jumping) {
 			currentFrame = right? fallingRight.getKeyFrame(0, false) : 
 				fallingLeft.getKeyFrame(0, false);
+			fallingStateTime = 0;
 		}
 		
 		//Falling animation.
 		if(velocity.y < -1.7f) {
-			//Falling animation goes here vv
-			currentFrame = right? fallingRight.getKeyFrame(stateTime, false) : 
-				fallingLeft.getKeyFrame(stateTime, false);
+			currentFrame = right? fallingRight.getKeyFrame(fallingStateTime, false) : 
+				fallingLeft.getKeyFrame(fallingStateTime, false);
+			fallingStateTime += Gdx.graphics.getDeltaTime();
 		}
 	}
 }
