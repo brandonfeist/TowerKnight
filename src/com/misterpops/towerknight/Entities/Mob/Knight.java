@@ -35,7 +35,6 @@ public class Knight extends MovableEntity{
 		fallingLeft = new Animation(0.070f, Textures.knightFallingLeft);
 		pushingRight = new Animation(0.090f, Textures.knightPushingRight);
 		pushingLeft = new Animation(0.090f, Textures.knightPushingLeft);
-		stateTime = 0f;
 	}
 
 	@Override
