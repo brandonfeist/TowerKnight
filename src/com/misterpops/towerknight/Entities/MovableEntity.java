@@ -57,8 +57,9 @@ public abstract class MovableEntity extends Entity {
 	
 	protected void collision() {
 		oldPosition = new Vector2(position);
-		boolean collisionX = false, collisionY = false;
-				collisionLeft = false; collisionRight = false;
+		boolean collisionY = false;
+		collisionLeft = false;
+		collisionRight = false;
 		
 		//X Collisions
 		if(velocity.x != 0) {
@@ -68,12 +69,12 @@ public abstract class MovableEntity extends Entity {
 				position.x += velocity.x / 16;
 				
 				if(velocity.x < 0) {
-					collisionLeft = collisionX = CollisionLibrary.collidesLeft(this);
+					collisionLeft  = CollisionLibrary.collidesLeft(this);
 				} else if(velocity.x > 0) {
-					collisionRight = collisionX = CollisionLibrary.collidesRight(this);
+					collisionRight = CollisionLibrary.collidesRight(this);
 				}
 
-				if(collisionX) {
+				if(collisionRight || collisionLeft) {
 					position.x = oldPosition.x;
 					velocity.x = 0;
 					break;
