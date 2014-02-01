@@ -8,6 +8,7 @@ import com.misterpops.towerknight.Utilities.CollisionLibrary;
 
 public abstract class MovableEntity extends Entity {
 
+	private final int COL_CHECK_STEPS = 6;
 	protected Vector2 velocity, acceleration;
 	protected float rotation, jumpSpeed = 0;
 	protected boolean right = true, canJump = false,
@@ -64,9 +65,9 @@ public abstract class MovableEntity extends Entity {
 		//X Collisions
 		if(velocity.x != 0) {
 			int countX = 0;
-			while (countX < 16) {
+			while (countX < COL_CHECK_STEPS) {
 				oldPosition.x = position.x;
-				position.x += velocity.x / 16;
+				position.x += velocity.x / COL_CHECK_STEPS;
 				
 				if(velocity.x < 0) {
 					collisionLeft  = CollisionLibrary.collidesLeft(this);
@@ -87,9 +88,9 @@ public abstract class MovableEntity extends Entity {
 		//Y Collisions
 		if(velocity.y != 0) {
 			int countY = 0;
-			while(countY < 16) {
+			while(countY < COL_CHECK_STEPS) {
 				oldPosition.y = position.y;
-				position.y += velocity.y / 16;
+				position.y += velocity.y / COL_CHECK_STEPS;
 
 				canJump = collisionY = CollisionLibrary.collidesBot(this);
 				if(velocity.y > 0) {
@@ -110,7 +111,7 @@ public abstract class MovableEntity extends Entity {
 	public void jump() {
 		if(jumping) {
 			velocity.add(0, jumpSpeed);
-			jumpSpeed -= 4.3f;
+			jumpSpeed -= 13.7f;
 			
 			if(!Gdx.input.isKeyPressed(Input.Keys.SPACE) ||
 					jumpSpeed <= 0 || jumpSpeed < World.GRAVITY) {

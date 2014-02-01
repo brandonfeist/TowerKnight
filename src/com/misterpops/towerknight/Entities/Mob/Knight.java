@@ -63,7 +63,7 @@ public class Knight extends MovableEntity{
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump) {
 			canJump = false;
 			jumping = true;
-			jumpSpeed = World.GRAVITY * 1.5f;
+			jumpSpeed = World.GRAVITY * 2f;
 		}
 		
 		//Input and acceleration.
@@ -123,9 +123,9 @@ public class Knight extends MovableEntity{
 				acceleration.mul(0.60f, 0);
 			} else {
 				if(acceleration.x > 0)
-					acceleration.x -= MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 4);
+					acceleration.x -= MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 2.5f);
 				else if(acceleration.x < 0)
-					acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 4);
+					acceleration.x += MAX_HORIZONTAL_SPEED / (ACCEL_DEGRADE * 2.5f);
 			}
 		}
 	}

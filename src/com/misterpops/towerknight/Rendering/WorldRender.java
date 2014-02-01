@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.misterpops.towerknight.TowerKnight;
 import com.misterpops.towerknight.Entities.Mob.Knight;
 import com.misterpops.towerknight.Entities.Tile.Coord;
@@ -23,11 +24,12 @@ public class WorldRender {
 	Knight knight;
 	Camera cam;
 	float width, height;
+	private float worldZoom = 2f;
 	
 	public WorldRender(World world) {
 		this.world = world;
-		width = Gdx.graphics.getWidth() / 4;  // / scale;
-		height = Gdx.graphics.getHeight() / 4; // / scale;
+		width = Gdx.graphics.getWidth() / worldZoom;  // / scale;
+		height = Gdx.graphics.getHeight() / worldZoom; // / scale;
 		
 		//Camera intialization.
 		cam = new OrthographicCamera();
@@ -67,14 +69,14 @@ public class WorldRender {
 		batch.end();
 		
 		//Later, set Array loop to render separate AABB boxes with different colors.
-		/*
+		
 		sr.setProjectionMatrix(cam.combined);
 		sr.begin(ShapeType.Rectangle);
 		
 		sr.rect(knight.getAABB().getX(), knight.getAABB().getY(), 
 				knight.getWidth(), knight.getHeight());
 		
-		sr.end();*/
+		sr.end();
 	}
 	
 	public void dispose() {

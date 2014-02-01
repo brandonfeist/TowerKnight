@@ -7,9 +7,7 @@ import com.misterpops.towerknight.Level.World;
 
 public class CollisionLibrary {
 	
-	//Collision still not perfect...
-	
-	private static final int COLLISION_PERCISION = 16;
+	private static final int COLLISION_PERCISION = 6;
 	
 	private static boolean isTileBlocked(float x, float y) {
 		int intX = (int) (x) / TowerKnight.TILE_SIZE;
@@ -24,7 +22,7 @@ public class CollisionLibrary {
 
 	public static boolean collidesLeft(Entity entity) {
 		for(float step = 0; step < entity.getHeight();
-				step += TowerKnight.TILE_SIZE / COLLISION_PERCISION) {
+				step += entity.getHeight() / COLLISION_PERCISION) {
 			
 			if(isTileBlocked(entity.getPosistion().x,
 					entity.getPosistion().y + step)) {
@@ -36,7 +34,7 @@ public class CollisionLibrary {
 	
 	public static boolean collidesRight(Entity entity) {
 		for(float step = 0; step < entity.getHeight();
-				step += TowerKnight.TILE_SIZE / COLLISION_PERCISION) {
+				step += entity.getHeight() / COLLISION_PERCISION) {
 			
 			if(isTileBlocked(entity.getPosistion().x + entity.getWidth(),
 					entity.getPosistion().y + step)) {
@@ -47,7 +45,7 @@ public class CollisionLibrary {
 	}
 	
 	public static boolean collidesBot(Entity entity) {
-		for(float step = 0; step < entity.getWidth(); step += TowerKnight.TILE_SIZE / COLLISION_PERCISION) {
+		for(float step = 0; step < entity.getWidth(); step +=entity.getWidth() / COLLISION_PERCISION) {
 			if(isTileBlocked(entity.getPosistion().x + step, entity.getPosistion().y)) {
 				return true;
 			}
@@ -56,7 +54,7 @@ public class CollisionLibrary {
 	}
 	
 	public static boolean collidesTop(Entity entity) {
-		for(float step = 0; step < entity.getWidth(); step += TowerKnight.TILE_SIZE / COLLISION_PERCISION) {
+		for(float step = 0; step < entity.getWidth(); step += entity.getWidth() / COLLISION_PERCISION) {
 			if(isTileBlocked(entity.getPosistion().x + step, entity.getPosistion().y + entity.getHeight())) {
 				return true;
 			}
