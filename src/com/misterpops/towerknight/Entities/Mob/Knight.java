@@ -19,6 +19,7 @@ public class Knight extends MovableEntity{
 			fallingLeft, pushingRight, pushingLeft;
 	//State times for animations.
 	private float stateTime, pushingStateTime, fallingStateTime;
+	private boolean doneJumping = true;
 
 	public Knight(float rotation, Vector2 position, float width, float height) {
 		super(rotation, position, width, height);
@@ -60,10 +61,16 @@ public class Knight extends MovableEntity{
 			velocity.y = - MAX_VERTICAL_SPEED;
 		
 		//Jumping
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump) {
-			canJump = false;
-			jumping = true;
-			jumpSpeed = World.GRAVITY * 2f;
+		//Not in MovableEntity because it has to do with player input.
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump && doneJumping) {
+				canJump = false;
+				doneJumping = false;
+				jumping = true;
+				jumpSpeed = World.GRAVITY * 2f;
+		}
+		//Checks if player let go of space bar before jumping again.
+		if(!Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			doneJumping = true;
 		}
 		
 		//Input and acceleration.

@@ -5,7 +5,7 @@ import com.misterpops.towerknight.Screens.MainMenu;
 
 public class TowerKnight extends Game {
 	
-	public static final String VERSION = "0.0.0.02 Pre-Alpha";
+	public static final String VERSION = "0.0.0.03 Pre-Alpha";
 	public static final String LOG = "Tower Knight";
 	public static final int TILE_SIZE = 32;
 	
