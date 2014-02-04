@@ -10,12 +10,12 @@ public class CollisionLibrary {
 	private static final int COLLISION_PERCISION = 6;
 	
 	private static boolean isTileBlocked(float x, float y) {
-		int intX = (int) (x) / TowerKnight.TILE_SIZE;
-		int intY = (int) (y) / TowerKnight.TILE_SIZE;
+		int intX = (int) (x) / TowerKnight.COL_TILE_SIZE;
+		int intY = (int) (y) / TowerKnight.COL_TILE_SIZE;
 		Coord coord = new Coord(intX, intY);
 		
-		if(World.map.containsKey(coord)) {
-			return World.map.get(coord).getIsSolid();
+		if(World.colMap.containsKey(coord)) {
+			return World.colMap.get(coord).getIsSolid();
 		}
 		return false;
 	}

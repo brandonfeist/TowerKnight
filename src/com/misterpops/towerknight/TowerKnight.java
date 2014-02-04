@@ -8,6 +8,7 @@ public class TowerKnight extends Game {
 	public static final String VERSION = "0.0.0.03 Pre-Alpha";
 	public static final String LOG = "Tower Knight";
 	public static final int TILE_SIZE = 32;
+	public static final int COL_TILE_SIZE = 16;
 	
 	@Override
 	public void create() {
